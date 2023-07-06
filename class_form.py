@@ -271,7 +271,6 @@ class Calender():
             self.labels[self.nowclass+2]['fg']='yellow'
         del(self.times[0])
         self.window.attributes('-topmost',False)
-        self.window.update()
     
         
     def offclass(self):
@@ -299,8 +298,8 @@ class Calender():
                 pass
             self.window.bind('<Double-Button-1>',self.select)
         del(self.times[0])
-        self.window.update()
         self.nowclass+=1
+        self.window.attributes('-topmost',True)
 
 
     def find(self):
