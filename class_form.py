@@ -24,11 +24,11 @@ class Calender():
         self.onw="" #上课提示
         self.offw="" #下课提示
         self.status=False #上/下课
-        self.offtk=None #下课窗口
+        self.offtk=[] #下课窗口
 
 
     """平滑动画函数"""
-    def move(self,wins,hopel,hopew,hopex,hopey,times=0.3):
+    def move(self,wins,hopel,hopew,hopex,hopey,times=1.2):
         length=[]
         width=[]
         x=[]
@@ -100,6 +100,7 @@ class Calender():
                 self.leftlabs.append(class_lab)
             else:
                 class_lab.x=position #为label添加x
+                class_lab.num=len(self.leftlabs+self.labels) #添加label所处classes位置
                 self.labels.append(class_lab)
             position+=class_lab.winfo_reqwidth()
 
@@ -134,9 +135,9 @@ class Calender():
                     self.selectlabs=Label(self.window,text=' '.join(self.selects),font=('幼圆',40),fg='white',bg='black')
                 self.selectlabs.place(x=self.x,y=self.height)
                 if self.width<self.selectlabs.winfo_reqwidth():
-                    self.move([self.window],[self.selectlabs.winfo_reqwidth()+self.x*2],[self.height+self.selectlabs.winfo_reqheight()+self.x],[int(self.window.winfo_x()-(self.selectlabs.winfo_reqwidth()-self.width)/2)],[self.yroot],0.05)
+                    self.move([self.window],[self.selectlabs.winfo_reqwidth()+self.x*2],[self.height+self.selectlabs.winfo_reqheight()+self.x],[int(self.window.winfo_x()-(self.selectlabs.winfo_reqwidth()-self.width)/2)],[self.yroot],0.1)
                 else:
-                    self.move([self.window],[self.width],[self.height+self.selectlabs.winfo_reqheight()+self.x],[self.window.winfo_x()],[self.yroot],0.05)
+                    self.move([self.window],[self.width],[self.height+self.selectlabs.winfo_reqheight()+self.x],[self.window.winfo_x()],[self.yroot],0.1)
                 self.selected=a
             elif a==self.selected: #重复点取消换课
                 if a<2:
@@ -144,7 +145,7 @@ class Calender():
                     self.labels[1]['bg']='black'
                 else:
                     self.labels[a]['bg']='black'
-                self.move([self.window],[self.width],[self.height],[self.window.winfo_x()],[self.yroot],0.05)
+                self.move([self.window],[self.width],[self.height],[self.window.winfo_x()],[self.yroot],0.1)
                 self.selectlabs.destroy()
                 self.selected=False
             else:
@@ -153,7 +154,7 @@ class Calender():
                     self.labels[1]['bg']='black'
                 else:
                     self.labels[self.selected]['bg']='black'
-                self.move([self.window],[self.width],[self.height],[self.window.winfo_x()],[self.yroot],0.05)
+                self.move([self.window],[self.width],[self.height],[self.window.winfo_x()],[self.yroot],0.1)
                 self.selectlabs.destroy()
 
                 if a<2: #选中星期
@@ -165,9 +166,9 @@ class Calender():
                     self.selectlabs=Label(self.window,text=' '.join(self.selects),font=('幼圆',40),fg='white',bg='black')
                 self.selectlabs.place(x=self.x,y=self.height)
                 if self.width<self.selectlabs.winfo_reqwidth():
-                    self.move([self.window],[self.selectlabs.winfo_reqwidth()+self.x*2],[self.height+self.selectlabs.winfo_reqheight()+self.x],[int(self.window.winfo_x()-(self.selectlabs.winfo_reqwidth()-self.width)/2)],[self.yroot],0.05)
+                    self.move([self.window],[self.selectlabs.winfo_reqwidth()+self.x*2],[self.height+self.selectlabs.winfo_reqheight()+self.x],[int(self.window.winfo_x()-(self.selectlabs.winfo_reqwidth()-self.width)/2)],[self.yroot],0.1)
                 else:
-                    self.move([self.window],[self.width],[self.height+self.selectlabs.winfo_reqheight()+self.x],[self.window.winfo_x()],[self.yroot],0.05)
+                    self.move([self.window],[self.width],[self.height+self.selectlabs.winfo_reqheight()+self.x],[self.window.winfo_x()],[self.yroot],0.1)
                 self.selected=a
 
         else:
@@ -191,6 +192,7 @@ class Calender():
                         self.leftlabs.append(class_lab)
                     else:
                         class_lab.x=position #为label添加x
+                        class_lab.num=len(self.leftlabs+self.labels) #添加label所处classes位置
                         self.labels.append(class_lab)
                     position+=class_lab.winfo_reqwidth()
 
@@ -206,8 +208,9 @@ class Calender():
                     a=len(self.selects)-1
                 self.labels[self.selected]['bg']='black'
                 self.labels[self.selected]['text']=self.selects[a]
+                self.classes[self.labels[self.selected].num]=self.selects[a]
 
-            self.move([self.window],[self.width],[self.height],[self.window.winfo_x()],[self.yroot],0.05)
+            self.move([self.window],[self.width],[self.height],[self.window.winfo_x()],[self.yroot],0.1)
             self.selectlabs.destroy()
             self.selected=False
 
@@ -221,7 +224,8 @@ class Calender():
             sleep(1)
             xe=self.labels[self.nowclass+2].x
             oncl=Label(self.window,text=self.labels[self.nowclass+2]['text'],font=('幼圆',40),fg='yellow',bg='black',wraplength=40) #先行创建上方label
-            self.move([self.window,self.offtk[0]],[self.width,1],[self.height,self.y*2+self.offtk[1].winfo_reqheight()],[self.xroot,int((self.window.winfo_screenwidth()+self.width)/2)-self.x+20],[self.yroot,self.yroot])
+            if self.offtk!=[]:
+                self.move([self.window,self.offtk[0]],[self.width,1],[self.height,self.y*2+self.offtk[1].winfo_reqheight()],[self.xroot,int((self.window.winfo_screenwidth()+self.width)/2)-self.x+20],[self.yroot,self.yroot])
 
             #删除原有
             for l in self.labels+self.leftlabs:
@@ -230,15 +234,16 @@ class Calender():
                 self.selectlabs.destroy()
             except AttributeError:
                 pass
-            self.offtk[1].destroy()
-            self.offtk[0].destroy()
+            if self.offtk!=[]:
+                self.offtk[1].destroy()
+                self.offtk[0].destroy()
 
             #缩至一格
             self.move([self.window],[self.x*2+oncl.winfo_reqwidth()],[self.y*2+oncl.winfo_reqheight()],[self.xroot+xe],[self.yroot])
             #居中放置
             oncl.place(y=self.y,relx=0.5,anchor='n')
             self.window.update()
-            sleep(5)
+            sleep(1)
             #第二动画
             onlab=Label(self.window,text=self.onw,font=('幼圆',40),fg='yellow',bg='black')
             onlab.place(relx=0.5,anchor='n',y=self.window.winfo_height())
@@ -263,16 +268,18 @@ class Calender():
                     self.leftlabs.append(class_lab)
                 else:
                     class_lab.x=position #为label添加x
+                    class_lab.num=len(self.leftlabs+self.labels) #添加label所处classes位置
                     self.labels.append(class_lab)
                 position+=class_lab.winfo_reqwidth()
             self.window.bind('<Double-Button-1>',self.select)
-        else:
-            self.labels[self.nowclass+1]['fg']='white'
-            self.labels[self.nowclass+2]['fg']='yellow'
+
+        self.labels[self.nowclass+1]['fg']='white'
+        self.labels[self.nowclass+2]['fg']='yellow'
         del(self.times[0])
         self.window.attributes('-topmost',False)
     
-        
+
+    """下课动画"""
     def offclass(self):
         if self.times[0]==[datetime.now().hour,datetime.now().minute]:
             self.window.unbind('<Double-Button-1>')
@@ -283,7 +290,13 @@ class Calender():
             else:
                 self.labels[self.selected]['bg']='black'
             self.offtk=[Tk()]
-            self.offtk.append(Label(self.offtk[0],text=self.offw,font=('幼圆',40),fg='yellow',bg='black'))
+
+            #判断放学(未完成)
+            if len(self.times)==1:
+                self.offtk.append(Label(self.offtk[0],text="放学了",font=('幼圆',40),fg='yellow',bg='black'))
+            else:
+                self.offtk.append(Label(self.offtk[0],text=self.offw,font=('幼圆',40),fg='yellow',bg='black'))
+            
             self.offtk[0].overrideredirect(True)
             self.offtk[0].attributes('-topmost',True)
             self.offtk[0].attributes('-alpha',0.7)
@@ -297,9 +310,14 @@ class Calender():
             except AttributeError:
                 pass
             self.window.bind('<Double-Button-1>',self.select)
+            
+        self.window.attributes('-topmost',True)
+        if len(self.times)==1:
+            self.window.mainloop()
         del(self.times[0])
         self.nowclass+=1
-        self.window.attributes('-topmost',True)
+        self.labels[self.nowclass+1]['fg']='white'
+        self.labels[self.nowclass+2]['fg']='yellow'
 
 
     def find(self):
