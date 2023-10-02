@@ -202,7 +202,7 @@ class Calender():
                         self.height=height
                 self.width=position+self.x #设置窗口宽度
                 self.xroot=int((self.window.winfo_screenwidth()-self.width)/2)
-                self.nowclass=0
+                self.nowclass=-1
             else:
                 if a>len(self.selects)-1:
                     a=len(self.selects)-1
