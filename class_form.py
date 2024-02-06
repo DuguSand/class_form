@@ -273,6 +273,8 @@ class Calender():
                 position+=class_lab.winfo_reqwidth()
             self.window.bind('<Double-Button-1>',self.select)
 
+            self.move([self.window],[self.width],[self.height],[self.xroot],[-60],0.1)
+
         self.labels[self.nowclass+1]['fg']='white'
         self.labels[self.nowclass+2]['fg']='yellow'
         del(self.times[0])
@@ -289,6 +291,8 @@ class Calender():
                 self.labels[1]['bg']='black'
             else:
                 self.labels[self.selected]['bg']='black'
+            
+            self.move([self.window],[self.width],[self.height],[self.xroot],[self.yroot])
             self.offtk=[Tk()]
 
             #判断放学(未完成)
