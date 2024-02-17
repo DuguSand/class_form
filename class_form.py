@@ -25,6 +25,7 @@ class Calender():
         self.offw="" #下课提示
         self.status=False #上/下课
         self.offtk=[] #下课窗口
+        self.movon=True #上隐开关
 
 
     """平滑动画函数"""
@@ -76,6 +77,7 @@ class Calender():
             self.times=[]
             self.onw=text["开始提示"]
             self.offw=text["结束提示"]
+            self.movon=text["上隐开关"]
             for x in range(len(on)):
                 self.times.append(on[x])
                 self.times.append(off[x])
@@ -273,7 +275,8 @@ class Calender():
                 position+=class_lab.winfo_reqwidth()
             self.window.bind('<Double-Button-1>',self.select)
 
-            self.move([self.window],[self.width],[self.height],[self.xroot],[-60],0.1)
+            if self.movon:
+                self.move([self.window],[self.width],[self.height],[self.xroot],[-60],0.1)
 
         self.labels[self.nowclass+1]['fg']='white'
         self.labels[self.nowclass+2]['fg']='yellow'
@@ -291,8 +294,8 @@ class Calender():
                 self.labels[1]['bg']='black'
             else:
                 self.labels[self.selected]['bg']='black'
-            
-            self.move([self.window],[self.width],[self.height],[self.xroot],[self.yroot])
+            if self.movon:
+                self.move([self.window],[self.width],[self.height],[self.xroot],[self.yroot])
             self.offtk=[Tk()]
 
             #判断放学(未完成)
