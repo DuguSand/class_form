@@ -139,7 +139,7 @@ class Calender():
                 if self.width<self.selectlabs.winfo_reqwidth():
                     self.move([self.window],[self.selectlabs.winfo_reqwidth()+self.x*2],[self.height+self.selectlabs.winfo_reqheight()+self.x],[int(self.window.winfo_x()-(self.selectlabs.winfo_reqwidth()-self.width)/2)],[self.yroot],0.1)
                 else:
-                    self.move([self.window],[self.width],[self.height+self.selectlabs.winfo_reqheight()+self.x],[self.window.winfo_x()],[self.yroot],0.1)
+                    self.move([self.window],[self.width],[self.height+self.selectlabs.winfo_reqheight()+self.x],[self.xroot],[self.yroot],0.1)
                 self.selected=a
             elif a==self.selected: #重复点取消换课
                 if a<2:
@@ -147,7 +147,7 @@ class Calender():
                     self.labels[1]['bg']='black'
                 else:
                     self.labels[a]['bg']='black'
-                self.move([self.window],[self.width],[self.height],[self.window.winfo_x()],[self.yroot],0.1)
+                self.move([self.window],[self.width],[self.height],[self.xroot],[self.yroot],0.1)
                 self.selectlabs.destroy()
                 self.selected=False
             else:
@@ -156,7 +156,7 @@ class Calender():
                     self.labels[1]['bg']='black'
                 else:
                     self.labels[self.selected]['bg']='black'
-                self.move([self.window],[self.width],[self.height],[self.window.winfo_x()],[self.yroot],0.1)
+                self.move([self.window],[self.width],[self.height],[self.xroot],[self.yroot],0.1)
                 self.selectlabs.destroy()
 
                 if a<2: #选中星期
@@ -170,7 +170,7 @@ class Calender():
                 if self.width<self.selectlabs.winfo_reqwidth():
                     self.move([self.window],[self.selectlabs.winfo_reqwidth()+self.x*2],[self.height+self.selectlabs.winfo_reqheight()+self.x],[int(self.window.winfo_x()-(self.selectlabs.winfo_reqwidth()-self.width)/2)],[self.yroot],0.1)
                 else:
-                    self.move([self.window],[self.width],[self.height+self.selectlabs.winfo_reqheight()+self.x],[self.window.winfo_x()],[self.yroot],0.1)
+                    self.move([self.window],[self.width],[self.height+self.selectlabs.winfo_reqheight()+self.x],[self.xroot],[self.yroot],0.1)
                 self.selected=a
 
         else:
@@ -212,7 +212,7 @@ class Calender():
                 self.labels[self.selected]['text']=self.selects[a]
                 self.classes[self.labels[self.selected].num]=self.selects[a]
 
-            self.move([self.window],[self.width],[self.height],[self.window.winfo_x()],[self.yroot],0.1)
+            self.move([self.window],[self.width],[self.height],[self.xroot],[self.yroot],0.1)
             self.selectlabs.destroy()
             self.selected=False
 
