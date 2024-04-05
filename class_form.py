@@ -278,6 +278,7 @@ class Calender():
 
             if self.movon:
                 self.move([self.window],[self.width],[self.height],[self.xroot],[-60],0.1)
+                self.window.unbind('<Double-Button-1>')
 
         self.labels[self.nowclass+1]['fg']='white'
         self.labels[self.nowclass+2]['fg']='yellow'
